@@ -1,0 +1,31 @@
+<Sysmon schemaversion="4.82">
+  <EventFiltering>
+    <RuleGroup name="Service Change Monitoring" groupRelation="or">
+
+      <ServiceConfigurationChange onmatch="include">
+        
+        <!-- Suspicious executables or interpreters -->
+        <ImagePath condition="contains any">cmd.exe;powershell.exe;\\;AppData;temp</ImagePath>
+        
+        <!-- Suspicious service names -->
+        <ServiceName condition="contains any">Remote;Updater;Helper;Backup;Monitor</ServiceName>
+        
+        <!-- StartType values:
+             0x0 = Boot Start
+             0x1 = System Start
+             0x2 = Auto Start
+             0x3 = Manual
+             0x4 = Disabled -->
+        <StartType condition="is">3</StartType> <!-- Manual start -->
+        
+        <!-- ServiceType values:
+             0x10 = Own Process
+             0x20 = Share Process
+             0x100 = Interactive -->
+        <ServiceType condition="is">0x10</ServiceType> <!-- Own process -->
+        
+      </ServiceConfigurationChange>
+
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>

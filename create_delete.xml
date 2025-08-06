@@ -26,6 +26,11 @@
         <TargetFilename condition="begin with">C:\Windows\Tasks\</TargetFilename>
       </FileCreate>
     </RuleGroup>
+<ServiceConfigurationChange onmatch="include">
+  <ImagePath condition="contains any">cmd.exe;powershell.exe;\\;AppData</ImagePath>
+  <ServiceName condition="contains any">Remote;Updater;Helper</ServiceName>
+</ServiceConfigurationChange>
 
   </EventFiltering>
 </Sysmon>
+
